@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Participants — {{ trek.name }}</h3>
+
+<a href="{{ url_for('staff.dashboard') }}" class="btn btn-secondary btn-sm mb-3">← Back to Dashboard</a>
+
+{% if bookings %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.user.name }}</td>
+            <td>{{ booking.user.email }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No participants registered for this trek yet.</p>
+{% endif %}
+
+{% endblock %}

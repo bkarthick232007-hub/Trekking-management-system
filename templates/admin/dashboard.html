@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h3 class="mb-4">Admin Dashboard</h3>
+<div class="col-md-3 mb-3">
+    <div class="card text-white bg-primary">
+        <div class="card-body">
+            <h5 class="card-title">Total Treks</h5>
+            <p class="card-text fs-3">{{ total_treks }}</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-3 mb-3">
+    <div class="card text-white bg-success">
+        <div class="card-body">
+            <h5 class="card-title">Total Users</h5>
+            <p class="card-text fs-3">{{total_users}}</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-3 mb-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Total Staff</h5>
+                <p class="card-text fs-3">{{ total_staff }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5 class="card-title">Total Bookings</h5>
+                <p class="card-text fs-3">{{ total_bookings }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-4">
+    <a href="{{url_for('admin.manage_staff')}}" class="btn btn-outline-primary me-2">Manage Staff</a>
+    <a href="{{url_for('admin.manage_treks')}}" class="btn btn-outline-success me-2">Manage Treks</a>
+    <a href="{{url_for('admin.view_bookings')}}" class="btn btn-outline-warining me-2">View Bookings</a>
+    <a href="{{url_for('admin.search')}}" class="btn btn-outline-secondary ">Search</a>
+
+</div>
+{% endblock %}

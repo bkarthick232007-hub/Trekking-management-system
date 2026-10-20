@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="max-width: 600px;">
+    <h3 class="mb-4">Create New Trek</h3>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <div class="mb-3">
+            <label>Trek Name</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Location</label>
+            <input type="text" name="location" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Difficulty</label>
+            <select name="difficulty" class="form-select" required>
+                <option value="Easy">Easy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Hard">Hard</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label>Duration (days)</label>
+            <input type="number" name="duration" class="form-control" min="1" required>
+        </div>
+        <div class="mb-3">
+            <label>Total Slots</label>
+            <input type="number" name="total_slots" class="form-control" min="1" required>
+        </div>
+        <div class="mb-3">
+            <label>Start Date</label>
+            <input type="date" name="start_date" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>End Date</label>
+            <input type="date" name="end_date" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Create Trek</button>
+    </form>
+</div>
+
+{% endblock %}

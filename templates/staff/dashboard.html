@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Staff Dashboard</h3>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+{% endwith %}
+
+<h5>Your Assigned Treks</h5>
+
+{% if assigned_treks %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Slots</th>
+            <th>Status</th>
+            <th>Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for trek in assigned_treks %}
+        <tr>
+            <td>{{ trek.name }}</td>
+            <td>{{ trek.location }}</td>
+            <td>{{ trek.available_slots }} / {{ trek.total_slots }}</td>
+            <td>{{ trek.status }}</td>
+            <td>{{ trek.bookings|length }}</td>
+            <td>
+                <a href="{{ url_for('staff.view_participants', trek_id=trek.id) }}" class="btn btn-sm btn-info">View Participants</a>
+                <a href="{{ url_for('staff.update_trek', trek_id=trek.id) }}" class="btn btn-sm btn-warning">Update</a>
+                {% if trek.status != 'Completed' %}
+                <form method="POST" action="{{ url_for('staff.complete_trek', trek_id=trek.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-success">Mark Completed</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No treks assigned to you yet.</p>
+{% endif %}
+
+{% endblock %}

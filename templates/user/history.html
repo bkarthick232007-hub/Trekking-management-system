@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Trekking History</h3>
+
+<a href="{{ url_for('user.dashboard') }}" class="btn btn-secondary btn-sm mb-3">← Back</a>
+
+{% if completed_bookings %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Trek</th>
+            <th>Location</th>
+            <th>Booking Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in completed_bookings %}
+        <tr>
+            <td>{{ booking.trek.name }}</td>
+            <td>{{ booking.trek.location }}</td>
+            <td>{{ booking.booking_date }}</td>
+            <td>{{ booking.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No completed treks yet.</p>
+{% endif %}
+
+{% endblock %}

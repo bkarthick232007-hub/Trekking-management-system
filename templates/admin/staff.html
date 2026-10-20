@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-4">Manage Staff</h3>
+
+<h5>Pending Approvals</h5>
+{% if pending_staff %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for staff in pending_staff %}
+        <tr>
+            <td>{{ staff.user.name }}</td>
+            <td>{{ staff.user.email }}</td>
+            <td>{{ staff.contact }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('admin.approve_staff', staff_id=staff.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                </form>
+                <form method="POST" action="{{ url_for('admin.reject_staff', staff_id=staff.id) }}" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No pending staff approvals.</p>
+{% endif %}
+
+<h5 class="mt-5">All Staff</h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Blacklisted</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for staff in all_staff %}
+        <tr>
+            <td>{{ staff.user.name }}</td>
+            <td>{{ staff.user.email }}</td>
+            <td>{{ staff.approval_status }}</td>
+            <td>{{ "Yes" if staff.user.is_blacklisted else "No" }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('admin.toggle_blacklist', user_id=staff.user.id) }}">
+                    <button type="submit" class="btn btn-sm btn-outline-dark">
+                        {{ "Unblacklist" if staff.user.is_blacklisted else "Blacklist" }}
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
